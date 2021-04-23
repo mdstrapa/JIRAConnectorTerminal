@@ -1,21 +1,24 @@
 package marcosoft;
 
-import java.util.Date;
 
 public class Incident extends Ticket {
-    int priority;
 
-    public Incident(String incidentSumary,Date incidentOpenDate, int incidentPriority){
+    public Incident(Customer incidentCustomer, String incidentSumary, String  incidentDescription, Category incidentCategory){
+        this.customer = incidentCustomer;
         this.summary = incidentSumary;
-        this.openDate = incidentOpenDate;
-        this.priority = incidentPriority;
-        this.type = 'I';
+        this.description = incidentDescription;
+        this.category = incidentCategory;
     }
 
-    public boolean save(ExternalSystem destination){
+    public int save(ExternalSystem destination){
+
+        int newIncidentNumber = 0;
+
         switch (destination){
             case USD:
                 System.out.println("This ticket will be save into USD");
+                Usd usd = new Usd();
+                newIncidentNumber = usd.createIncident(this);
                 break;
             case JIRA:
                 System.out.println("This ticket will be save into JIRA");
@@ -24,7 +27,7 @@ public class Incident extends Ticket {
                 System.out.println("This ticket will not be saved");
                 break;
         }
-        return true;
+        return newIncidentNumber;
     }
 
     public boolean addComment(){

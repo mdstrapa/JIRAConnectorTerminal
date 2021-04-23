@@ -1,10 +1,6 @@
 package marcosoft;
 
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class App 
 {
     public static void main( String[] args )
@@ -12,31 +8,19 @@ public class App
         System.out.println( "Trying to create a ticket in USD" );
         System.out.println( "=========================" );
 
-        Usd usd = new Usd();
-        Incident inc = null;
+        Incident incident = null;
+        Customer incidentCustomer = new Customer("U'2C975EEBC83E224C9F7A8868415036D9'");
+        Category incidentCategory = new Category("USD.Desenvolvimento.Views");
+        incident = new Incident(incidentCustomer, "Resumo vindo do Java", "Descrição vindo do Java", incidentCategory);
 
-        RestAccess restAccess = usd.getAccessKey();
+        int newIncidentNumber = incident.save(ExternalSystem.USD);
 
-        System.out.println( "USD accessKey: " + restAccess.access_key );
-        System.out.println( "Works until: " + restAccess.expiration_date );
-
-        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
-        Date incidentOpenDate;
-        try{
-
-            incidentOpenDate = simpleDate.parse("1984-03-31");
-
-            inc = new Incident("Resumo", incidentOpenDate, 1);
-
-        }catch(ParseException e){
-            e.printStackTrace();
-        }
-
-        boolean incidentCreationResult = inc.save(ExternalSystem.USD);
-
-        if(incidentCreationResult) System.out.println( "--- The incidente was CREATED :) ");
+        if(newIncidentNumber != 0) System.out.println( "--- The incidente was CREATED :) The number is " + newIncidentNumber);
         else System.out.println( "--- The incidente was NOT CREATED :( ");
 
+        System.out.println("");
+        System.out.println("==============");
+        System.out.println("END OF PROGRAM");
 
     }
 }

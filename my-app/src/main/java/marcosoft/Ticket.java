@@ -1,9 +1,8 @@
 package marcosoft;
 
-import java.util.Date;
-
 public class Ticket {
+    Customer customer;
     String summary;
-    Date openDate;
-    char type;
+    String description;
+    Category category;
 }
