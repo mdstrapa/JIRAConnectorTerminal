@@ -1,7 +1,7 @@
 package marcosoft;
 
 public class Ticket {
-    Customer customer;
+    UsdContact customer;
     String summary;
     String description;
     Category category;

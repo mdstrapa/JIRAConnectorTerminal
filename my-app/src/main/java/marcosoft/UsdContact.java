@@ -1,9 +1,9 @@
 package marcosoft;
 
-public class Customer {
+public class UsdContact {
     String id;
 
-    public Customer(String customerId){
+    public UsdContact(String customerId){
         this.id = customerId;
     }
     
