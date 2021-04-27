@@ -1,4 +1,4 @@
-package marcosoft;
+package marcosoft.usd;
 
 public class UsdContact {
     String id;

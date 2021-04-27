@@ -1,4 +1,4 @@
-package marcosoft;
+package marcosoft.usd;
 import com.google.gson.Gson;
 
 public class UsdJsonFormatter {

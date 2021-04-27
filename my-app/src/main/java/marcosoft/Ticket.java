@@ -1,8 +1,12 @@
 package marcosoft;
 
+import marcosoft.usd.Category;
+import marcosoft.usd.UsdContact;
+
 public class Ticket {
-    UsdContact customer;
-    String summary;
-    String description;
-    Category category;
+    public UsdContact customer;
+    public String summary;
+    public String description;
+    public Category category;
+
 }

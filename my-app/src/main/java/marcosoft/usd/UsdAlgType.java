@@ -1,4 +1,4 @@
-package marcosoft;
+package marcosoft.usd;
 
 public class UsdAlgType {
     String REL_ATTR;

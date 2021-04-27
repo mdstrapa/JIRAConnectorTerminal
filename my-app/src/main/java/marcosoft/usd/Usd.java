@@ -1,13 +1,13 @@
-package marcosoft;
+package marcosoft.usd;
 
-
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
-import java.io.IOException;
-import java.net.http.HttpRequest.BodyPublishers;
+
 import com.google.gson.Gson;
 
 
@@ -42,34 +42,6 @@ public class Usd {
 
         return usdRequest;
     }
-
-    public UsdObjectCreationResponse createIncident(Incident incidentToCreate){
-
-        //in each operation we have to evaluate the current access key.
-        //if it is expired, we have to renew it
-        RestAccess restAccess = getAccessKey();
-        
-        UsdObjectCreationResponse response = new UsdObjectCreationResponse();
-
-        String requestBody = usdJsonFormatter.formatRequestBody(incidentToCreate,"in");
-        //String responseBody = "";
-        HttpRequest request = buildUsdRequest("POST","in",requestBody,restAccess.access_key);
-        
-        try {
-           
-                HttpResponse<String> httpResponse = httpClient.send(request, BodyHandlers.ofString());
-                
-                response.object = usdJsonFormatter.getObjectFromResponse(httpResponse.body());
-                response.REL_ATTR = usdJsonFormatter.getRellAttrFromResponse(httpResponse.body());
-                response.COMMON_NAME = usdJsonFormatter.getCommonNameFromResponse(httpResponse.body());
-
-            } catch (IOException | InterruptedException e) {
-                System.out.println("DEU MERDA");
-                e.printStackTrace();
-            }
-
-        return response;
-    }
     
     private RestAccess getAccessKey(){
         RestAccess restAccess = null;
@@ -90,39 +62,38 @@ public class Usd {
         return restAccess;
     }
 
-    public Incident getIncident(){
+    public UsdIncident getIncident(){
         UsdContact incidentCustomer = new UsdContact("U'2C975EEBC83E224C9F7A8868415036D9'");
         Category incidentCategory = new Category("USD.Desenvolvimento.Views");
-        Incident incident = new Incident(incidentCustomer, "Resumo vindo do Java", "Descrição vindo do Java", incidentCategory);
+        UsdIncident incident = new UsdIncident(incidentCustomer, "Resumo vindo do Java", "Descrição vindo do Java", incidentCategory);
 
         return incident;
     }
 
-    public boolean addCommentToTicket(Incident incidentToAddComment, String comment){
-        boolean operationResult = false;
+    public UsdObjectCreationResponse createObject(Object objectToCreate, String usdFactory){
+        UsdObjectCreationResponse response = new UsdObjectCreationResponse();
 
         RestAccess restAccess = getAccessKey();
+    
+        String requestBody = usdJsonFormatter.formatRequestBody(objectToCreate,usdFactory);
 
-        UsdContact analyst = new UsdContact("U'2C975EEBC83E224C9F7A8868415036D9'");
-        UsdAlgType type = new UsdAlgType("LOG");
-        UsdIncidentRel incidentRel = new UsdIncidentRel(incidentToAddComment.RELL_ATTR);
-        UsdAlg usdAlg = new UsdAlg(comment, analyst, type, incidentRel);
-
-        String requestBody = usdJsonFormatter.formatRequestBody(usdAlg,"alg");
-
-        System.out.println(requestBody);
         
-        HttpRequest request = buildUsdRequest("POST","alg", requestBody, restAccess.access_key);
+        HttpRequest request = buildUsdRequest("POST",usdFactory, requestBody, restAccess.access_key);
         try {
-           
+            
             HttpResponse<String> httpResponse = httpClient.send(request, BodyHandlers.ofString());
-            if (httpResponse.statusCode()==201) operationResult = true;
+            if (httpResponse.statusCode()==201){
+                response.object = usdJsonFormatter.getObjectFromResponse(httpResponse.body());
+                response.REL_ATTR = usdJsonFormatter.getRellAttrFromResponse(httpResponse.body());
+                response.COMMON_NAME = usdJsonFormatter.getCommonNameFromResponse(httpResponse.body());
+            }
 
         } catch (IOException | InterruptedException e) {
-            System.out.println("DEU MERDA");
+            System.out.println("An error has occurred: " + e.getMessage());
             e.printStackTrace();
         }
 
-        return operationResult;
+        return response;
     }
+
 }

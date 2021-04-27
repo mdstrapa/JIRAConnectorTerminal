@@ -1,4 +1,4 @@
-package marcosoft;
+package marcosoft.usd;
 
 public class Category {
     String COMMON_NAME;
