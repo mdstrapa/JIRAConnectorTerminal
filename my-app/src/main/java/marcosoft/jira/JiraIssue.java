@@ -14,10 +14,12 @@ public class JiraIssue {
     public boolean create(){
         boolean operationResult = false;
         Jira jira = new Jira();
-        String reponse = jira.createJiraIssue(this);
-
-        System.out.println(reponse);
-
+        try {
+            this.key = jira.createJiraIssue(this);
+            operationResult = true;
+        } catch (Exception e) {
+            System.out.println("An error has occured: " + e.getMessage());
+        }
         return operationResult;
     }
 

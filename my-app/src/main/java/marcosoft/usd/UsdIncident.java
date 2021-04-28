@@ -1,7 +1,7 @@
 package marcosoft.usd;
 
 import marcosoft.Ticket;
-import marcosoft.ExternalSystem;
+
 
 
 public class UsdIncident extends Ticket {
