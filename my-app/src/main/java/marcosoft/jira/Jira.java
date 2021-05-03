@@ -13,6 +13,8 @@ import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import com.google.gson.Gson;
 
+import marcosoft.Configuration;
+
 
 public class Jira {
 
@@ -34,11 +36,13 @@ public class Jira {
     private HttpRequest buildJiraRequest(String method, JiraIssue jiraIssue){
 
 
+        Configuration configuration = new Configuration();
+
         URI jiraEndPoint = null;
         if (method == "GET"){
-            jiraEndPoint = URI.create("https://team-1611176048161.atlassian.net/rest/api/3/issue/" + jiraIssue.key);
+            jiraEndPoint = URI.create(configuration.getProperty("jiraEndPoint") + jiraIssue.key);
         }else{
-            jiraEndPoint = URI.create("https://team-1611176048161.atlassian.net/rest/api/3/issue");
+            jiraEndPoint = URI.create(configuration.getProperty("jiraEndPoint"));
         }
         
         String requestbody = new Gson().toJson(jiraIssue);

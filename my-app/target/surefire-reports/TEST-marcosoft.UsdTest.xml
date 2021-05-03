@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="marcosoft.AppTest" time="0.029" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="marcosoft.UsdTest" time="0.196" tests="1" errors="1" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="16"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="BR"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk-16.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/marcosstrapazon/Documents/Dev/Java/JIRAConnector/my-app/target/surefire/surefirebooter16516101725511905002.jar /Users/marcosstrapazon/Documents/Dev/Java/JIRAConnector/my-app/target/surefire 2021-04-30T15-29-15_214-jvmRun1 surefire9595158514644720853tmp surefire_03514747618657925852tmp"/>
+    <property name="sun.java.command" value="/Users/marcosstrapazon/Documents/Dev/Java/JIRAConnector/my-app/target/surefire/surefirebooter17119358482868294013.jar /Users/marcosstrapazon/Documents/Dev/Java/JIRAConnector/my-app/target/surefire 2021-04-30T16-16-05_916-jvmRun1 surefire11150315445157748354tmp surefire_015120435883379856049tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/Users/marcosstrapazon/Documents/Dev/Java/JIRAConnector/my-app/target/test-classes:/Users/marcosstrapazon/Documents/Dev/Java/JIRAConnector/my-app/target/classes:/Users/marcosstrapazon/.m2/repository/junit/junit/4.11/junit-4.11.jar:/Users/marcosstrapazon/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/marcosstrapazon/.m2/repository/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar:"/>
@@ -28,7 +28,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="surefire.real.class.path" value="/Users/marcosstrapazon/Documents/Dev/Java/JIRAConnector/my-app/target/surefire/surefirebooter16516101725511905002.jar"/>
+    <property name="surefire.real.class.path" value="/Users/marcosstrapazon/Documents/Dev/Java/JIRAConnector/my-app/target/surefire/surefirebooter17119358482868294013.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="16+36-2231"/>
@@ -53,5 +53,45 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="60.0"/>
   </properties>
-  <testcase name="shouldAnswerWithTrue" classname="marcosoft.AppTest" time="0.001"/>
+  <testcase name="should_Return_CorrectResponse" classname="marcosoft.UsdTest" time="0.195">
+    <error message="URI with undefined scheme" type="java.lang.IllegalArgumentException">java.lang.IllegalArgumentException: URI with undefined scheme
+	at marcosoft.UsdTest.should_Return_CorrectResponse(UsdTest.java:26)
+</error>
+    <system-err><![CDATA[java.io.FileNotFoundException: my-app/src/main/java/resources/config.properties (No such file or directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:211)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:153)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:108)
+	at marcosoft.Configuration.getProperty(Configuration.java:14)
+	at marcosoft.usd.Usd.buildUsdRequest(Usd.java:26)
+	at marcosoft.usd.Usd.getAccessKey(Usd.java:55)
+	at marcosoft.usd.Usd.createObject(Usd.java:80)
+	at marcosoft.UsdTest.should_Return_CorrectResponse(UsdTest.java:26)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:365)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:273)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:238)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:159)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:384)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:345)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:126)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:418)
+]]></system-err>
+  </testcase>
 </testsuite>

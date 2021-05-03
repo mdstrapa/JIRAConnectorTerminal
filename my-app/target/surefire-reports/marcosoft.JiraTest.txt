@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: marcosoft.JiraTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.087 s <<< FAILURE! - in marcosoft.JiraTest
+should_Return_CorrectResponse(marcosoft.JiraTest)  Time elapsed: 0.087 s  <<< ERROR!
+java.lang.IllegalArgumentException: URI with undefined scheme
+	at marcosoft.JiraTest.should_Return_CorrectResponse(JiraTest.java:22)
+

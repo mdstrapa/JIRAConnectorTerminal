@@ -10,6 +10,8 @@ import java.net.http.HttpResponse.BodyHandlers;
 
 import com.google.gson.Gson;
 
+import marcosoft.Configuration;
+
 
 public class Usd {
 
@@ -19,7 +21,9 @@ public class Usd {
 
     private HttpRequest buildUsdRequest(String method, String usdObject, String requestBody, int accessKey){
 
-        URI usdEndPoint = URI.create("http://usd.des.sicredi.net:8050/caisd-rest/" + usdObject);
+        Configuration configuration = new Configuration();
+
+        URI usdEndPoint = URI.create(configuration.getProperty("usdEndPoint")+ usdObject);
         HttpRequest usdRequest = null;
 
         if (usdObject == "rest_access"){
@@ -29,6 +33,14 @@ public class Usd {
                 .setHeader("Content-Type", "application/json")
                 .setHeader("Accept", "application/json")
                 .setHeader("Authorization", "Basic bWFyY29zX3N0cmFwYXpvbjpFVUEyMDIxZWhub2lz")
+                .build();
+        }else if (method == "GET") {
+            usdRequest = HttpRequest.newBuilder()
+                .uri(usdEndPoint)
+                .method(method, BodyPublishers.ofString(requestBody))
+                .setHeader("Accept", "application/json")
+                .setHeader("X-Obj-Attrs", "summary,description")
+                .setHeader("X-AccessKey", String.valueOf(accessKey))
                 .build();
         }else{
             usdRequest = HttpRequest.newBuilder()
@@ -62,10 +74,30 @@ public class Usd {
         return restAccess;
     }
 
-    public UsdIncident getIncident(){
-        UsdContact incidentCustomer = new UsdContact("U'2C975EEBC83E224C9F7A8868415036D9'");
-        Category incidentCategory = new Category("USD.Desenvolvimento.Views");
-        UsdIncident incident = new UsdIncident(incidentCustomer, "Resumo vindo do Java", "Descrição vindo do Java", incidentCategory);
+    public UsdIncident getObject(String usdFactory, String objectId){
+
+        String responseBody;
+        UsdIncident incident = null;
+ 
+        RestAccess restAccess = getAccessKey();
+
+        HttpRequest request = buildUsdRequest("GET",usdFactory + "/"  + objectId, "", restAccess.access_key);
+
+        try {            
+            
+            HttpResponse<String> httpResponse = httpClient.send(request, BodyHandlers.ofString());
+
+            if (httpResponse.statusCode()==200){
+                responseBody = usdJsonFormatter.formatResponse(httpResponse.body(),"in");
+                
+                incident = new Gson().fromJson(responseBody, UsdIncident.class);
+            }
+
+        } catch (IOException | InterruptedException e) {
+            System.out.println("An error has occurred: " + e.getMessage());
+            e.printStackTrace();
+        }
+
 
         return incident;
     }
